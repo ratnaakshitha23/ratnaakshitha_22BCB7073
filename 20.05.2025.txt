@@ -1,0 +1,68 @@
+create database Tuesday;
+use tuseday;
+create table category(
+c_id int primary key,
+c_name varchar(25),
+c_details varchar(25)
+);
+
+insert into category values(101,'electronics','abcd');
+insert into category values(102,'furnitures','abcdefgh');
+
+select * from category;
+create table products(
+p_id int primary key,
+p_name varchar(25),
+p_details varchar(35),
+c_id int,
+foreign key products(c_id) references category(c_id)
+);
+
+desc products;
+
+insert into products values(501,'samsung s23','12gb',101);
+select * from products;
+update products set c_id = 999 where p_id = 501;
+
+
+create database Tuesday;
+drop database tuseday;
+use tuseday;
+create table category(
+c_id int primary key,
+c_name varchar(25),
+c_details varchar(25)
+);
+
+insert into category values(101,'electronics','abcd');
+insert into category values(102,'furnitures','abcdefgh');
+
+select * from category;
+create table products(
+p_id int primary key,
+p_name varchar(25),
+p_details varchar(35),
+c_id int,
+foreign key products(c_id) references category(c_id) on delete cascade  #on update cascade
+);
+
+desc products;
+
+insert into products values(501,'iphone 16 pro max','12gb',101);
+select * from products;
+
+alter table products add constraint unique_pname unique (p_name);
+alter table products drop index unique_pname;
+
+
+#we can drop primary key...no need mention any thing as it contains the single primary key
+alter table products drop primary key;
+
+create table products (
+    p_id int primary key,
+    p_name varchar(25),
+    p_details varchar(35) default 'no details',
+    c_id int,
+    check (c_id > 100),
+    foreign key (c_id) references category(c_id)
+);
