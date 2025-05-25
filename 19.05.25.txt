@@ -1,0 +1,96 @@
+#delete drop turncate
+
+show databases;
+show tables from vit;
+use vit;
+create table cse;
+show tables from vit;
+CREATE TABLE Worker (
+	WORKER_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	FIRST_NAME CHAR(25),
+	LAST_NAME CHAR(25),
+	SALARY INT(15),
+	JOINING_DATE DATETIME,
+	DEPARTMENT CHAR(25)
+);
+INSERT INTO Worker 
+	(WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES
+		(001, 'Monika', 'Arora', 100000, '14-02-20 09.00.00', 'HR'),
+		(002, 'Niharika', 'Verma', 80000, '14-06-11 09.00.00', 'Admin'),
+		(003, 'Vishal', 'Singhal', 300000, '14-02-20 09.00.00', 'HR'),
+		(004, 'Amitabh', 'Singh', 500000, '14-02-20 09.00.00', 'Admin'),
+		(005, 'Vivek', 'Bhati', 500000, '14-06-11 09.00.00', 'Admin'),
+		(006, 'Vipul', 'Diwan', 200000, '14-06-11 09.00.00', 'Account'),
+		(007, 'Satish', 'Kumar', 75000, '14-01-20 09.00.00', 'Account'),
+		(008, 'Geetika', 'Chauhan', 90000, '14-04-11 09.00.00', 'Admin');
+select * from worker;
+
+delete from worker where worker_id = 5;
+desc worker
+
+delete--->some or all rows
+turncate-->all rows in quick manner
+drop--->never get back
+
+#transaction:savepoint(we can give range),rollback,commit
+
+create database vit_ap;
+drop database vit;
+use vit;
+
+
+create database vit_amaravati;
+use vit_amaravati;
+create table cse(
+id int,
+name varchar(25));
+start transaction;
+insert into cse values(1001,'akshitha');
+savepoint al;
+insert into cse values(1002,'ram');
+savepoint a2;
+
+delete from cse where id=1002;
+select * from cse;
+
+rollback to a2;
+select * from cse;
+
+
+#commit
+create database vitamaravati;
+use vitamaravati;
+
+create table cse (
+    id int,
+    name varchar(25)
+);
+
+start transaction;
+insert into cse values (1001, 'akshitha');
+savepoint al;
+insert into cse values (1002, 'ram');
+savepoint a2;
+delete from cse where id = 1002;
+select * from cse;
+rollback to a2;
+select * from cse;
+commit;
+select * from cse;
+
+
+
+select first_name from worker;
+
+
+
+#logical operators
+select * from worker where department = 'HR';
+select * from worker where first_name != 'Vipul';
+select * from worker where salary > 100000;
+select * from worker where salary < 100000;
+select * from worker where salary >= 200000;
+select * from worker where salary <= 90000;
+
+select * from worker where salary>200000 and department="HR"
+select * from worker where salary>100000 and salary<300000 and departmet='Admin' or department='HR'
