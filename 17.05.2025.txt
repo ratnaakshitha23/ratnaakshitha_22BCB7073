@@ -1,0 +1,84 @@
+create database vit;
+show databases;
+
+show tables from vit;
+
+drop database vit;
+create table cse(
+s_id int,
+s_name varchar(30),
+s_mark int
+
+)
+use vit;
+
+select * from cse;
+insert into cse values(101,"akshitha",23);
+
+
+#create a database 3 tables 4 columuns 10 rows
+
+create database FoodDB;
+use FoodDB;
+create table Foods (
+    FoodID int,
+    FoodName varchar(50),
+    CategoryID int,
+    Price int
+);
+
+insert into Foods values
+(1, 'Pizza', 1, 250),
+(2, 'Burger', 1, 120),
+(3, 'Chicken Biryani', 2, 180),
+(4, 'Paneer Butter Masala', 2, 200),
+(5, 'French Fries', 1, 90),
+(6, 'Gulab Jamun', 3, 60),
+(7, 'Ice Cream', 3, 80.00),
+(8, 'Masala Dosa', 2, 100),
+(9, 'Cold Drink', 4, 40),
+(10, 'Chocolate Cake', 3, 150);
+
+select * from foods;
+
+create table categories (
+    categoryid int,
+    isavailable int,
+    typeid int,
+    rating int
+);
+
+insert into categories values
+(1, 1, 101, 4),
+(2, 1, 102, 5),
+(3, 1, 103, 4),
+(4, 1, 104, 3),
+(5, 0, 105, 4),
+(6, 1, 106, 5),
+(7, 1, 107, 3),
+(8, 1, 108, 4),
+(9, 1, 109, 3),
+(10, 1, 110, 4);
+
+select * from categories;
+
+create table orders (
+    orderid int,
+    foodid int,
+    quantity int,
+    orderdate int
+);
+
+insert into orders values
+(101, 1, 2, 20250501),
+(102, 3, 1, 20250501),
+(103, 6, 4, 20250502),
+(104, 2, 3, 20250502),
+(105, 10, 1, 20250503),
+(106, 5, 2, 20250503),
+(107, 7, 1, 20250504),
+(108, 4, 1, 20250504),
+(109, 9, 3, 20250505),
+(110, 8, 2, 20250505);
+
+select * from orders;
