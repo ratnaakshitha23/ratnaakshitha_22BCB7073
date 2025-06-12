@@ -1,0 +1,25 @@
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongod.exe --replSet myReplSet --dbpath C:\data\db0 --port 27017 --bind_ip localhost
+
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+
+mongo.exe
+
+
+
+1. run these commands : 
+mongod --port 27017 --dbpath ~/Desktop/mongoDB/replicaPractice/db0 --replSet "rs0" --bind_ip localhost --fork --logpath ~/db0.log
+mongod --port 27018 --dbpath ~/Desktop/mongoDB/replicaPractice/db1 --replSet "rs0" --bind_ip localhost --fork --logpath ~/db1.log
+mongod --port 27019 --dbpath ~/Desktop/mongoDB/replicaPractice/db2 --replSet "rs0" --bind_ip localhost --fork --logpath ~/db2.log
+2. open a new shell and run :
+mongosh --port 27017
+3. rs.initiate({
+  _id: "rs0",
+  members: [
+    { _id: 0, host: "localhost:27017" },
+    { _id: 1, host: "localhost:27018" },
+    { _id: 2, host: "localhost:27019" }
+  ]
+})
+4. rs.status()
