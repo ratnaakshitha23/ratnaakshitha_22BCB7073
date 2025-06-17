@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login/Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: #fff;
+      text-align: center;
+      padding: 50px;
+    }
+    .form {
+      background: #fff;
+      color: #333;
+      padding: 2rem;
+      margin: auto;
+      width: 300px;
+      border-radius: 10px;
+    }
+    input {
+      margin: 10px;
+      padding: 10px;
+      width: 90%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px;
+      width: 95%;
+      background-color: #667eea;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="form">
+    <h2>Login</h2>
+    <input type="text" id="loginUsername" placeholder="Username"><br>
+    <input type="password" id="loginPassword" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+
+    <h2>Register</h2>
+    <input type="text" id="regUsername" placeholder="Username"><br>
+    <input type="password" id="regPassword" placeholder="Password"><br>
+    <button onclick="register()">Register</button>
+  </div>
+
+  <script>
+    async function login() {
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        window.location.href = '/dashboard.html';
+      } else {
+        alert('Login failed');
+      }
+    }
+
+    async function register() {
+      const username = document.getElementById('regUsername').value;
+      const password = document.getElementById('regPassword').value;
+
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      alert(data.message);
+    }
+  </script>
+</body>
+</html>
