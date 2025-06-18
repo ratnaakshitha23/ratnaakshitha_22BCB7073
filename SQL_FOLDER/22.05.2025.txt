@@ -1,0 +1,92 @@
+drop database if exists vit_amaravati;
+create database vit_amaravati;
+use vit_amaravati;
+create table worker (
+    worker_id int not null primary key,
+    first_name char(25),
+    last_name char(25),
+    salary int,
+    joining_date datetime,
+    department char(25)
+);
+insert into worker 
+    (worker_id, first_name, last_name, salary, joining_date, department) values
+    (1, 'monika', 'arora', 100000, '2014-02-20 09:00:00', 'hr'),
+    (2, 'niharika', 'verma', 80000, '2014-06-11 09:00:00', 'admin'),
+    (3, 'vishal', 'singhal', 300000, '2014-02-20 09:00:00', 'hr'),
+    (4, 'amitabh', 'singh', 500000, '2014-02-20 09:00:00', 'admin'),
+    (5, 'vivek', 'bhati', 500000, '2014-06-11 09:00:00', 'admin'),
+    (6, 'vipul', 'diwan', 200000, '2014-06-11 09:00:00', 'account'),
+    (7, 'satish', 'kumar', 75000, '2014-01-20 09:00:00', 'account'),
+    (8, 'geetika', 'chauhan', 90000, '2014-04-11 09:00:00', 'admin');
+select * from worker;
+select department,count(department) from worker where department='account';
+select department,count(department) from worker group by department;
+
+select department, count(*) as employee_count
+from worker
+group by department
+order by employee_count desc
+limit 1;
+
+select department, count(*) as employee_count
+from worker
+group by department
+having count(*) > 3
+
+##second largest
+select department, count(*) as employee_count
+from worker
+group by department
+order by employee_count desc
+limit 1 offset 2;
+
+select first_name,department from worker where salary = (select max(worker) from worker);
+
+##another example for sub query
+select first_name, salary
+from worker
+where salary > (
+    select avg(salary)
+    from worker
+);
+
+##joins
+
+
+create table student(
+s_id int,
+s_name varchar(25)
+);
+
+insert into student values(101,'jayanth'),(102,'akshitha'),(103,'ram'),(104,'sita')
+
+create table address(
+  s_id int,
+  s_address varchar(25)
+);
+insert into address values 
+(101, 'pune'),
+(104, 'chennai'),
+(105, 'hyderabad');
+
+select * from student cross join address;
+
+select * from student inner join address where student.s_id=address.s_id;
+
+#natural join(it should contains the some constraints)
+
+#left outer
+
+select * from student left outer join address on (student.s_id=address.s_id);
+
+
+#right outer
+select * from student right outer join address on (student.s_id=address.s_id);
+select distinct salary
+from worker w1
+where 4 = (
+    select count(distinct salary)
+    from worker w2
+    where w2.salary > w1.salary
+);
