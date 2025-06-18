@@ -1,0 +1,109 @@
+					   MYSQL_TEST
+#1. Write an SQL query to fetch unique values of DEPARTMENT from 
+Worker table.
+select distinct department 
+from Worker;
+#2. Write an SQL query to print all Worker details from the Worker table order by FIRST_NAME Ascending and DEPARTMENT Descending
+select * 
+from Worker 
+order by FIRST_NAME ASC ,DEPARTMENT DESC;
+#3. Write an SQL query to print details of the Workers whose FIRST_NAME contains ‘a’
+select * 
+from Worker 
+where FIRST_NAME LIKE '%a%';
+#4. Write an SQL query to print details of the Workers whose FIRST_NAME ends with ‘h’ and contains six alphabets
+select * 
+from Worker 
+where FIRST_NAME LIKE '_____h';
+#5. Write an SQL query to print details of the Workers whose SALARY lies between 100000 and 500000
+select * 
+from Worker 
+where SALARY BETWEEN 100000 AND 500000;
+#6. Write an SQL query to print details of the Workers who have joined in Feb’2014.
+select *  
+from Worker 
+where JOINING_DATE BETWEEN '2014-02-01' AND '2014-02-28';
+
+#7. Write an SQL query to fetch the count of employees working in the department ‘Admin’
+select count(*) as employee_count 
+from Worker 
+where DEPARTMENT = 'Admin';
+#8. Write an SQL query to fetch worker names with salaries >= 50000 and <= 100000.
+select FIRST_NAME, LAST_NAME 
+from Worker 
+where SALARY >= 50000 and SALARY <= 100000;
+#9. Write an SQL query to fetch the no. of workers for each department in the descending order
+select DEPARTMENT, count(*) as number_of_worker 
+from Worker 
+group by DEPARTMENT 
+order by number_of_worker  desc;
+#10. Write an SQL query to print details of the Workers who are also Managers
+select * 
+from Worker 
+where WORKER_ID in (select WORKER_REF_ID from Title where WORKER_TITLE = 'Manager');
+#11. Write an SQL query to determine the 2nd lowest salary without using TOP or limit method.
+select min(SALARY) as SecondLowestSalary 
+from Worker 
+where SALARY not in (select min(SALARY) from Worker);
+
+#12. Write an SQL query to fetch the list of employees with the same salary
+select FIRST_NAME, LAST_NAME, Salary 
+from Worker 
+where Salary in (select Salary from Worker group by Salary having count(*) > 1);
+#13. Write an SQL query to show the second highest salary from a table
+select max(SALARY) as SecondHighestSalary
+from Worker
+where Salary < (select max(SALARY) from Worker);
+#14. Write an SQL query to show one row twice in results from a table.
+select * from Worker 
+union all
+select * from Worker;
+#15. Write an SQL query to fetch the first 50% records from a table.
+select * 
+from Worker
+where WORKER_ID <= (
+    select COUNT(*) / 2 
+    from Worker
+);
+
+#16. Write an SQL query to fetch the departments that have less than three people in it.
+select DEPARTMENT
+from Worker
+group by DEPARTMENT
+having count(*) < 3;
+
+#17. Write an SQL query to show all departments along with the number of people in there.
+select DEPARTMENT ,COUNT(*) AS Department_count
+from Worker
+group by DEPARTMENT;
+
+#18. Write an SQL query to fetch the last five records from a table
+select *
+from Worker
+order by WORKER_ID desc
+limit 5;
+
+#19. Write an SQL query to print the name of employees having the highest salary in each department
+select w.FIRST_NAME, w.DEPARTMENT, w.SALARY
+from Worker w
+where w.SALARY = (
+    select max(SALARY)
+    from Worker
+    where DEPARTMENT = w.DEPARTMENT
+);
+#20. Write an SQL query to fetch three max salaries from a table
+select distinct salary
+from Worker
+order by salary desc
+limit 3;
+#21. Write an SQL query to print the name of employees having the lowest salary in account and admin department
+select FIRST_NAME, DEPARTMENT, SALARY
+from Worker w
+where DEPARTMENT in ('Account', 'Admin')
+  and SALARY = (
+    select min(SALARY)
+    from Worker
+    where DEPARTMENT = w.DEPARTMENT
+  );
+
+
